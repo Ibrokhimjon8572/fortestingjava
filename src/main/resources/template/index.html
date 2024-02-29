@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Star Admin2 </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/vendors/feather/feather.css}">
+    <link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/typicons/typicons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/vendors/datatables.net-bs4/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" th:href="@{/js/select.dataTables.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/vertical-layout-light/style.css}">
+    <!-- endinject -->
+    <style>
+        #folders_category{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr; /* Adjust column width as needed */
+        }
+        @media screen and (max-width: 990px){
+            #folders_category{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        @media screen and (max-width: 780px){
+            #folders_category{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 0px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-scroller">
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <div class="me-3">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-top">
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-bs-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form class="search-form" id="search-form">
+                        <i class="icon-search"></i>
+                        <input id="search-input" type="search" class="form-control" placeholder="Search Here" title="Search here">
+                    </form>
+
+                    <script>
+                        document.getElementById('search-form').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Prevent form submission
+
+                            var keyword = document.getElementById('search-input').value;
+                            var url = "/api/rule/search?keyword=" + encodeURIComponent(keyword);
+
+                            // Redirect to the constructed URL
+                            window.location.href = url;
+                        });
+                    </script>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper" >
+
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false"
+                           aria-controls="form-elements">
+                            <i class="menu-icon mdi mdi-card-text-outline"></i>
+                            <span class="menu-title">Қоида</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="form-elements">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" th:href="@{/api/rule/category}">Асосий</a></li>
+                            </ul>
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" th:href="@{/api/fee}">Жарима</a></li>
+                            </ul>
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" th:href="@{/api/category}">Булим</a></li>
+                            </ul>
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" th:href="@{/api/rule}">Қоидани сақлаш</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-12 ">
+                                <div class="card template-demo" id="folders_category">
+                                    <div class="m-3" th:each="category : ${allCategory}">
+                                        <a th:href="@{'category/' + ${category.id}}">
+                                            <button type="button" th:value="${category.id}" class="btn btn-social-icon-text btn-twitter">
+                                                <i class="mdi mdi-folder-multiple"></i> <span th:text="${category.title}"></span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a th:href="@{https://www.bootstrapdash.com/}" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2024. All rights reserved.</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/progressbar.js/progressbar.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/js/settings.js}"></script>
+<script th:src="@{/js/todolist.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script th:src="@{/js/jquery.cookie.js}" th:type="@{/text/javascript}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/proBanner.js}"></script>
+
+</body>
+
+</html>
+
+

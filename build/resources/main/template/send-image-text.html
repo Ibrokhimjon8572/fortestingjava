@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Star Admin2 </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/vendors/feather/feather.css}">
+    <link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/typicons/typicons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/vendors/datatables.net-bs4/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" th:href="@{/js/select.dataTables.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/vertical-layout-light/style.css}">
+    <style>
+        /* Style for the loading indicator */
+        #loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-top">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                data-bs-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <form class="search-form" action="#">
+                    <i class="icon-search"></i>
+                    <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false"
+                   aria-controls="form-elements">
+                    <i class="menu-icon mdi mdi-card-text-outline"></i>
+                    <span class="menu-title">Текст</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="form-elements">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" th:href="@{message}">Текст</a></li>
+                    </ul>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" th:href="@{image_message}">Текст ва Расим</a></li>
+                    </ul>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/api/image}"> Расим</a></li>
+                    </ul>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/api/group}"> Группа</a></li>
+                    </ul>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/api/text/history}"> Тарих</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Текст</h4>
+                                <form class="form-sample" role="form" method="post" >
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+
+                                                  <textarea
+                                                          type="text"
+                                                          name="content"
+                                                          class="form-control"
+                                                          id="exampleFormControlTextarea1"
+                                                          style="height: 300px;"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="weekDays" id="week">
+                                                <option value=""></option>
+                                                <option value="MON">Душанба</option>
+                                                <option value="TUE">Сешанба</option>
+                                                <option value="WED">Чоршаеба</option>
+                                                <option value="THU">Пайшанда</option>
+                                                <option value="FRI">Жума</option>
+                                                <option value="SAT">Шанба</option>
+                                                <option value="SUN">Якшанба</option>
+                                                <option value="MON,TUE,WED,THU,SAT,FRI,SUN">Душ,Сеш,Чор,Пай,Жум,Шан,Якш</option>
+                                                <option value="MON,WED,FRI">Душ,Чор,Жум</option>
+                                                <option value="TUE,THU,SAT">Сеш,Пай,Шан</option>
+                                                <option value="MON,WED">Душ,Чор</option>
+                                                <option value="TUE,THU">Сеш,Пай</option>
+                                            </select>
+                                            <select name="weekDays" id="time">
+                                                <option value=""></option>
+                                                <option value="8:00">8:00</option>
+                                                <option value="9:00">9:00</option>
+                                                <option value="10:00">10:00</option>
+                                                <option value="11:00">11:00</option>
+                                                <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <h3>Расим:</h3>
+                                            <div class="row" style="overflow-y: scroll; height: 250px; margin-top: 10px;" >
+                                                <!-- Image thumbnails -->
+                                                <div th:each="images : ${imageAndGroups.image}" class="col-md-3 mb-2">
+                                                    <div class="card box-shadow">
+                                                        <label class="m-0">
+                                                            <input type="checkbox" name="image" th:value="${images.id}">
+                                                            <img th:src="@{/image/} + ${images.imageName}" class="card-img-top img-thumbnail" alt="Image">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="overflow-y: scroll; height:200px;">
+                                            <h3>Гурух:</h3>
+                                            <label>
+                                                <input type="checkbox" name="all" id="allGroup" value="ALL" ></label>
+                                            <label><h5>Барчаси</h5></label>
+                                            <div th:each="group : ${imageAndGroups.group}" class="form-check">
+                                                <label>
+                                                    <input
+                                                            type="checkbox"
+                                                            name="group"
+                                                            th:value="${group.id}"
+                                                            th:text="${group.groupName}"
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <button type="submit" onclick="submitForm()" class="btn btn-primary">Save</button>
+                                </form>
+                                <!-- HTML for the loading indicator -->
+                                <div id="loading">Loading...</div>
+
+                                <script>
+                                    function submitForm() {
+                                        // Show loading indicator
+                                        document.getElementById('loading').style.display = 'block';
+
+                                        var everyT = true;
+                                        var selectTime = document.getElementById('time').value;
+                                        var selectWeek = document.getElementById("week").value;
+                                        var selectAllGroup = document.getElementById("allGroup").checked;
+
+                                        if (selectTime === "" && selectWeek === "") {
+                                            everyT = false;
+                                        } else {
+                                            everyT;
+                                        }
+
+                                        if (selectWeek == null) {
+                                            selectTime = null;
+                                        } else {
+                                            selectTime;
+                                        }
+
+                                        var selectedGroup = [];
+                                        if (!selectAllGroup) {
+                                            selectedGroup = Array.from(document.querySelectorAll('input[name="group"]:checked')).map(function (checkbox) {
+                                                return { id: parseInt(checkbox.value) };
+                                            });
+                                        }
+
+                                        var selectedImages = Array.from(document.querySelectorAll('input[name="image"]:checked')).map(function (checkbox) {
+                                            return { id: parseInt(checkbox.value) };
+                                        });
+
+                                        var formData = {
+                                            weekDays: selectWeek,
+                                            every: everyT,
+                                            content: document.getElementById('exampleFormControlTextarea1').value,
+                                            groups: selectedGroup,
+                                            time: selectTime,
+                                            allGroups: selectAllGroup,
+                                            images: selectedImages
+                                        };
+
+                                        fetch('/api/text/image', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify(formData),
+                                        })
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error('Network response was not ok');
+                                                }
+                                                // Hide loading indicator
+                                                document.getElementById('loading').style.display = 'none';
+                                                return window.location.href = '/api/text/image_message';
+                                            })
+                                            .catch(error => {
+                                                // Hide loading indicator if an error occurs
+                                                document.getElementById('loading').style.display = 'none';
+                                                console.error('Error:', error);
+                                            });
+                                    }
+
+                                    // Assuming your form has the class "form-sample"
+                                    document.querySelector('.form-sample').addEventListener('submit', function (event) {
+                                        event.preventDefault();
+                                        submitForm();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a th:href="@{https://www.bootstrapdash.com/}" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2024. All rights reserved.</span>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/progressbar.js/progressbar.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/js/settings.js}"></script>
+<script th:src="@{/js/todolist.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script th:src="@{/js/jquery.cookie.js}" th:type="@{/text/javascript}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/proBanner.js}"></script>
+<!-- End custom js for this page-->
+
+</body>
+
+</html>
+
+
